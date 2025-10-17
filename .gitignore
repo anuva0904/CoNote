@@ -1,0 +1,7 @@
+#node_modules
+node_modules/
+#config files
+config/
+
+#DS.store
+.DS_Store
