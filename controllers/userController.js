@@ -1,6 +1,5 @@
-const jwt=require('jsonwebtoken');
 const User=require('./models/usermodel');
-const {generateToken} =('./utils/')
+const {generateToken} =require('../utils/tokenService');
 const bcrypt=require('bcrypt');
 require('dotenv').config();
 
@@ -32,7 +31,10 @@ exports.registerUser=async(req,res)=>{
         await newUser.save();
 
         const jwttoken= generateToken({id: newUser._id});
-        res.cookie('token',jwttoken,{httpOnly:true, maxAge:7*24*60*60*1000});
+        res.cookie('token',jwttoken,{httpOnly:true,secure: process.env.NODE_ENV === 'production',
+        sameSite: 'strict', maxAge:7*24*60*60*1000});
+
+        
 
         return res.redirect('/login');
 

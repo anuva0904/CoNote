@@ -5,3 +5,6 @@ config/
 
 #DS.store
 .DS_Store
+
+#env
+.env
