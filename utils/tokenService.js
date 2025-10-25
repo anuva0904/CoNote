@@ -3,12 +3,12 @@ const jwt = require('jsonwebtoken');
 
 
 exports.generateToken=(payload)=>{
-    return jwt.sign(playload, process.env.jwtSecret,{ expiresIn: '7d' });
+    return jwt.sign(payload, process.env.jwtSecret,{ expiresIn: '7d' });
 }
 
 exports.verifyToken=(token)=>{
     try{
-        return jwt.verify(token, process.env.JWT_SECRET);
+        return jwt.verify(token, process.env.jwtSecret);
     }
     catch (err){
         return null;

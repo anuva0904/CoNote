@@ -6,9 +6,12 @@ const app=express();
 
 
 
+
+
 //Local modules
 const db=require('./config/dbconnection');
 db();
+
 
 app.get('/',(req,res)=>{
     res.send('Hello World');
