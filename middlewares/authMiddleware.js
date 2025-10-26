@@ -1,15 +1,15 @@
 const {verifyToken}=require('../utils/tokenService');
 const User = require('../models/usermodel');
 
-exports.protectRoute = async (req,res)=>{
+exports.protectRoute = async (req,res, next)=>{
     try{
         const token = req.cookies.token;
         if(!token){
             return res.redirect('/login');
         }
 
-        const decode =verifyToken(token);
-        if(!decode){
+        const decoded =verifyToken(token);
+        if(!decoded){
             res.clearCookie('token');
             return res.redirect('/login');
         }
@@ -21,7 +21,7 @@ exports.protectRoute = async (req,res)=>{
         }
 
         req.user = user;
-        next();
+        return next();
     }catch(err){
         console.log('Auth middleware error', err.message);
         res.clearCookie('token');
