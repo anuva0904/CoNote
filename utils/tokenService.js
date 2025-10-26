@@ -12,6 +12,5 @@ exports.verifyToken=(token)=>{
     }
     catch (err){
         return null;
-
     }
 }
