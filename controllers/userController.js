@@ -1,4 +1,6 @@
 const User=require('../models/usermodel');
+const Folder = require('../models/foldermodel');
+const Notes = require('../models/notesmodel');
 const {generateToken} =require('../utils/tokenService');
 const {verifyemail}=require('../utils/emailVerfication');
 const bcrypt=require('bcrypt');
@@ -15,6 +17,7 @@ exports.getLogin=(req,res)=>{
 exports.getRegister=(req,res)=>{
     return res.status(200).render('register');
 }
+
 
 //get dashboard 
 exports.getDashboard=(req,res)=>{
@@ -113,11 +116,14 @@ exports.logoutUser=(req,res)=>{
 //User Delete 
 exports.deleteUser=async(req,res)=>{
     try{
-        
         const user =req.user;
         if(!user){
             return res.status(401).redirect('/login');
         }
+
+        await Notes.deleteMany({ owner: user._id });
+
+        await Folder.deleteMany({ owner: user._id });
 
         await User.findByIdAndDelete(user._id);
 
