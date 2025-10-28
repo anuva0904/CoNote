@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Your Folders</title>
+  <link rel="stylesheet" href="/css/style.css"> <!-- optional -->
+</head>
+<body>
+  <header>
+    <h1>Welcome, <%= user ? user.name : 'Guest' %> 👋</h1>
+    <nav>
+      <a href="/dashboard">Dashboard</a>
+      <a href="/notes">Notes</a>
+      <a href="/users/logout">Logout</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="folder-section">
+      <h2>Your Folders</h2>
+
+      <% if (error) { %>
+        <div class="error"><%= error %></div>
+      <% } %>
+
+      <% if (message) { %>
+        <div class="success"><%= message %></div>
+      <% } %>
+
+      <!-- Folder creation form -->
+      <form action="/folders" method="POST" class="folder-form">
+        <input type="text" name="name" placeholder="Enter folder name" required>
+        <button type="submit">Create Folder</button>
+      </form>
+
+      <!-- Folder list -->
+      <% if (folders && folders.length > 0) { %>
+        <ul class="folder-list">
+          <% folders.forEach(folder => { %>
+            <li>
+              <a href="/folders/<%= folder._id %>"><%= folder.name %></a>
+              <form action="/folders/<%= folder._id %>?_method=DELETE" method="POST" class="inline-form">
+                <button type="submit" class="delete-btn">🗑️</button>
+              </form>
+            </li>
+          <% }) %>
+        </ul>
+      <% } else { %>
+        <p>No folders yet. Create your first one!</p>
+      <% } %>
+    </section>
+  </main>
+</body>
+</html>
