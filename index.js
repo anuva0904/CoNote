@@ -10,6 +10,7 @@ const db=require('./config/dbconnection');
 const userRoutes = require('./routers/userRouters');
 const notesRoutes = require('./routers/notesRouter');
 const folderRoutes = require('./routers/folderRouter');
+const commentRoutes = require('./routers/commentsRouter');
 
 //Initializing app
 const app=express();
@@ -31,6 +32,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.use('/users', userRoutes);
 app.use('/notes', notesRoutes);
 app.use('/folders', folderRoutes);
+app.use('/comments', commentRoutes);
 
 // 404 handler
 app.use((req, res) => {
