@@ -19,6 +19,7 @@ exports.getFolder=async(req,res)=>{
     }
     
 }
+
 //Get a specific folder
 exports.getFolderById=async(req,res)=>{
     try{
@@ -68,7 +69,7 @@ exports.createFolder=async(req,res)=>{
         });
         }
 
-        const newfolder = await new Folder({
+        const newfolder = new Folder({
             name,
             owner : user._id,
             sharedWith : []
